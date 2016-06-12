@@ -1,4 +1,5 @@
 var gulp = require('gulp')
+var ts = require('gulp-typescript')
 //var sass = require('gulp-sass')
 //var concat = require('gulp-concat')
 //var minify = require('gulp-minify-css')
@@ -12,7 +13,7 @@ var gulp = require('gulp')
 
 //compila los vendors js en un solo archivo
 gulp.task('vendors-js', function() {
-    return gulp.src([
+    gulp.src([
         //colocal aquí los vendors, colocando las direcciones de los archivos minificados de cada uno
         //'./node_modules/bootstrap/dist/css/bootstrap.min.css',
         './node_modules/core-js/client/shim.min.js',
@@ -20,13 +21,19 @@ gulp.task('vendors-js', function() {
         './node_modules/reflect-metadata/Reflect.js',
         './node_modules/systemjs/dist/system.src.js',
         './node_modules/rxjs/bundles/Rx.umd.js',
+    ])
+    .pipe(gulp.dest('./public/javascripts/vendors'))
+    
+    return gulp.src([
         './node_modules/@angular/core/core.umd.js',
         './node_modules/@angular/common/common.umd.js',
         './node_modules/@angular/compiler/compiler.umd.js',
         './node_modules/@angular/platform-browser/platform-browser.umd.js',
         './node_modules/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js'
+
     ])
-    .pipe(gulp.dest('./public/javascripts'))
+    .pipe(gulp.dest('./public/javascripts/angular'))
+    
 
 })
 
@@ -43,16 +50,29 @@ gulp.task('vendors-css', function() {
 
 //compila los js en un solo archivo
 gulp.task('scripts', function() {
-    var scripts = gulp.src('./assets/js/src/*.js').pipe(jshint())
-    var uglified = scripts.pipe(clone())
+    //var scripts = gulp.src('./assets/js/src/*.js').pipe(jshint())
+    //var uglified = scripts.pipe(clone())
 
-    scripts.pipe(gulp.dest('./assets/js'))
-    return uglified
-            .pipe(uglify())
-            .pipe(rename(function (file) {
-                file.basename = file.basename + '.min'
+    //scripts.pipe(gulp.dest('./assets/js'))
+    //return uglified
+    //        .pipe(uglify())
+    //        .pipe(rename(function (file) {
+    //            file.basename = file.basename + '.min'
+    //        }))
+    //        .pipe(gulp.dest('./assets/js'))
+
+    return gulp.src('src/**/*.ts')
+            .pipe(ts({
+                "target": "es5",
+                "module": "commonjs",
+                "moduleResolution": "node",
+                "sourceMap": true,
+                "emitDecoratorMetadata": true,
+                "experimentalDecorators": true,
+                "removeComments": false,
+                "noImplicitAny": false
             }))
-            .pipe(gulp.dest('./assets/js'))
+            .pipe(gulp.dest('public/javascripts/app'))
 })
 
 //compile all sass into a single file
@@ -129,8 +149,10 @@ gulp.task('vendors', ['vendors-css', 'vendors-js'])
 
 //Observa y hace cambios en el archivo llamado
 gulp.task('default', function () {
-    gulp.watch('./assets/css/src/*.scss', ['sass'])
-    gulp.watch('./assets/js/src/*.js', ['scripts'])
+    //gulp.watch('./assets/css/src/*.scss', ['sass'])
+    //gulp.watch('./assets/js/src/*.js', ['scripts'])
+    gulp.watch('src/**/*.ts', ['scripts'])
+    
 })
 
 //Observa, hace cambios y los sube al servidor

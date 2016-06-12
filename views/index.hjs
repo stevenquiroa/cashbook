@@ -3,25 +3,20 @@
     <title>Angular 2 QuickStart</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
     <!-- 1. Load libraries -->
      <!-- Polyfill(s) for older browsers -->
-    <script src="javascripts/core-js/client/shim.min.js"></script>
-    <script src="javascripts/zone.js/dist/zone.js"></script>
-    <script src="javascripts/reflect-metadata/Reflect.js"></script>
-    <script src="javascripts/systemjs/dist/system.src.js"></script>
-
-	<script src="javascripts/rxjs/bundles/Rx.umd.js"></script>
-    <script src="javascripts/@angular/core/core.umd.js"></script>
-    <script src="javascripts/@angular/common/common.umd.js"></script>
-    <script src="javascripts/@angular/compiler/compiler.umd.js"></script>
-    <script src="javascripts/@angular/platform-browser/platform-browser.umd.js"></script>
-    <script src="javascripts/@angular/platform-browser-dynamic/platform-browser-dynamic.umd.js"></script>
-    <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.js"></script>
-    <script>
-      System.import('app').catch(function(err){ console.error(err); });
-    </script>
+    <script src="javascripts/vendors/shim.min.js"></script>
+    <script src="javascripts/vendors/zone.js"></script>
+    <script src="javascripts/vendors/Reflect.js"></script>
+    <script src="javascripts/vendors/system.src.js"></script>
+    <script src="javascripts/vendors/Rx.umd.js"></script>
+    
+    <script src="javascripts/angular/core.umd.js"></script>
+    <script src="javascripts/angular/common.umd.js"></script>
+    <script src="javascripts/angular/compiler.umd.js"></script>
+    <script src="javascripts/angular/platform-browser.umd.js"></script>
+    <script src="javascripts/angular/platform-browser-dynamic.umd.js"></script>
   </head>
   <!-- 3. Display the application -->
   <body>
